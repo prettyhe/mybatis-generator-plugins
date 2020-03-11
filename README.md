@@ -28,9 +28,9 @@ Set of plugins for the mybatis-generator to further tweak the generated code.
 <plugin type="com.alpha.coding4j.mybatis.generator.plugins.ModelFieldRemarkCommentPlugin" />
 ```
 
-## ModelFieldRemarkCommentPlugin
+## InsertOrUpdatePlugin
 ```xml
 <plugin type="com.alpha.coding4j.mybatis.generator.plugins.InsertOrUpdatePlugin" >
-    <property name="enableTables" value="table_name" />
+    <property name="enableTables" value="table_a_name,table_b_name" />
 </plugin>
 ```
