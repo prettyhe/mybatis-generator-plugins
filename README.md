@@ -34,3 +34,11 @@ Set of plugins for the mybatis-generator to further tweak the generated code.
     <property name="enableTables" value="table_a_name,table_b_name" />
 </plugin>
 ```
+
+## DisableGetterSetterMethodsPlugin
+```xml
+<plugin type="com.alpha.coding4j.mybatis.generator.plugins.DisableGetterSetterMethodsPlugin" >
+    <property name="disableGetter" value="true"/>
+    <property name="disableSetter" value="true"/>
+</plugin>
+```
