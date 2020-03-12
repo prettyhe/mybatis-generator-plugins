@@ -42,7 +42,7 @@ public class InsertOrUpdatePlugin extends PluginAdapter {
     public boolean clientBasicInsertMethodGenerated(Method method, Interface interfaze,
                                                     IntrospectedTable introspectedTable) {
         final boolean ret = super.clientBasicInsertMethodGenerated(method, interfaze, introspectedTable);
-        if (enableTables.contains(introspectedTable.getFullyQualifiedTableNameAtRuntime())) {
+        if (ret && enableTables.contains(introspectedTable.getFullyQualifiedTableNameAtRuntime())) {
             addMethodToInterface(interfaze, introspectedTable);
         }
         return ret;
