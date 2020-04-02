@@ -47,3 +47,8 @@ Set of plugins for the mybatis-generator to further tweak the generated code.
 ```xml
 <plugin type="com.alpha.coding4j.mybatis.generator.plugins.SelectMapListPlugin" />
 ```
+
+## SelectByStatementPlugin
+```xml
+<plugin type="com.alpha.coding4j.mybatis.generator.plugins.SelectByStatementPlugin" />
+```
