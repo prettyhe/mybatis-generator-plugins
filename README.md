@@ -42,3 +42,8 @@ Set of plugins for the mybatis-generator to further tweak the generated code.
     <property name="disableSetter" value="true"/>
 </plugin>
 ```
+
+## SelectMapListPlugin
+```xml
+<plugin type="com.alpha.coding4j.mybatis.generator.plugins.SelectMapListPlugin" />
+```
