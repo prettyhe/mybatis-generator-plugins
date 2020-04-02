@@ -1,5 +1,6 @@
 package com.alpha.coding4j.mybatis.generator.plugins;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +19,16 @@ import org.mybatis.generator.api.dom.java.Parameter;
  * Date: 2020/4/2
  */
 public class SelectByStatementPlugin extends PluginAdapter {
+
+    private List<String> methodDocLines = Arrays.asList(
+            "/**",
+            " * execute select by custom statement",
+            " *",
+            " * @param selectStatement select sql statement, like: select * from table_a where column_a = #{params.a}",
+            " * @param params          params for sql, like: (a=xxx)",
+            " * @return select results as List of Map",
+            " */"
+    );
 
     @Override
     public boolean validate(List<String> warnings) {
@@ -52,8 +63,11 @@ public class SelectByStatementPlugin extends PluginAdapter {
         method.setAbstract(true);
         method.setReturnType(returnType);
         method.addParameter(param);
+        method.addParameter(new Parameter(FullyQualifiedJavaType.getNewMapInstance(), "params"));
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.addAnnotation("@Select({\"${selectStatement}\"})");
+
+        methodDocLines.forEach(x -> method.addJavaDocLine(x));
 
         interfaze.addMethod(method);
     }
