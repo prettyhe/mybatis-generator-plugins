@@ -57,3 +57,10 @@ Set of plugins for the mybatis-generator to further tweak the generated code.
 ```xml
 <plugin type="com.alpha.coding4j.mybatis.generator.plugins.CountByStatementPlugin" />
 ```
+
+## domainObjectNameSuffix
+```xml
+<!-- 实体类重命名规则:尾部统一添加Entity -->
+<property name="domainObjectNameSuffix" value="Entity" />
+<property name="domainObjectNameSuffixExcludeTables" value="table_name" />
+```
