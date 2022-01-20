@@ -20,7 +20,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
  */
 public class CountByStatementPlugin extends PluginAdapter {
 
-    private List<String> methodDocLines = Arrays.asList(
+    private final List<String> methodDocLines = Arrays.asList(
             "/**",
             " * execute count by custom statement",
             " *",
@@ -64,7 +64,7 @@ public class CountByStatementPlugin extends PluginAdapter {
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.addAnnotation("@Select({\"${countStatement}\"})");
 
-        methodDocLines.forEach(x -> method.addJavaDocLine(x));
+        methodDocLines.forEach(method::addJavaDocLine);
 
         interfaze.addMethod(method);
     }

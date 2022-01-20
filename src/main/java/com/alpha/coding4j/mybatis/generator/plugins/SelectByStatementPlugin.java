@@ -20,7 +20,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
  */
 public class SelectByStatementPlugin extends PluginAdapter {
 
-    private List<String> methodDocLines = Arrays.asList(
+    private final List<String> methodDocLines = Arrays.asList(
             "/**",
             " * execute select by custom statement",
             " *",
@@ -67,7 +67,7 @@ public class SelectByStatementPlugin extends PluginAdapter {
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.addAnnotation("@Select({\"${selectStatement}\"})");
 
-        methodDocLines.forEach(x -> method.addJavaDocLine(x));
+        methodDocLines.forEach(method::addJavaDocLine);
 
         interfaze.addMethod(method);
     }

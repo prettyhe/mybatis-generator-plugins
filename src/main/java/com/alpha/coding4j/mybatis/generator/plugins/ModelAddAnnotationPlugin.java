@@ -9,12 +9,6 @@ import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 
-/**
- * ModelAddAnnotationPlugin
- *
- * @version 1.0
- * Date: 2020-03-07
- */
 public class ModelAddAnnotationPlugin extends PluginAdapter {
 
     public static final String ANNOTATION_CLASS = "annotationClass";

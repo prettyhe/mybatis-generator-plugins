@@ -1,7 +1,5 @@
 package com.alpha.coding4j.mybatis.generator.plugins;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +15,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.config.GeneratedKey;
+import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * InsertOrUpdatePlugin
@@ -27,21 +26,21 @@ import org.mybatis.generator.config.GeneratedKey;
 public class InsertOrUpdatePlugin extends PluginAdapter {
 
     private static final String ENABLE_TABLES = "enableTables";
-    private Set<String> enableTables = new HashSet<>();
+    private final Set<String> enableTables = new HashSet<>();
 
     @Override
     public boolean validate(List<String> warnings) {
         final String includeTables = properties.getProperty(ENABLE_TABLES);
-        Optional.ofNullable(includeTables).filter(p -> stringHasValue(p))
+        Optional.ofNullable(includeTables).filter(StringUtility::stringHasValue)
                 .map(p -> Arrays.stream(p.split(",")).collect(Collectors.toSet()))
-                .ifPresent(p -> p.forEach(x -> enableTables.add(x)));
+                .ifPresent(enableTables::addAll);
         return true;
     }
 
     @Override
-    public boolean clientBasicInsertMethodGenerated(Method method, Interface interfaze,
-                                                    IntrospectedTable introspectedTable) {
-        final boolean ret = super.clientBasicInsertMethodGenerated(method, interfaze, introspectedTable);
+    public boolean clientInsertMethodGenerated(Method method, Interface interfaze,
+                                               IntrospectedTable introspectedTable) {
+        final boolean ret = super.clientInsertMethodGenerated(method, interfaze, introspectedTable);
         if (ret && enableTables.contains(introspectedTable.getFullyQualifiedTableNameAtRuntime())) {
             addMethodToInterface(interfaze, introspectedTable);
         }

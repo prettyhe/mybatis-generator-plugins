@@ -35,6 +35,11 @@ Set of plugins for the mybatis-generator to further tweak the generated code.
 </plugin>
 ```
 
+## InsertSelectiveWithPrimaryKeyPlugin
+```xml
+<plugin type="com.alpha.coding4j.mybatis.generator.plugins.InsertSelectiveWithPrimaryKeyPlugin" />
+```
+
 ## DisableGetterSetterMethodsPlugin
 ```xml
 <plugin type="com.alpha.coding4j.mybatis.generator.plugins.DisableGetterSetterMethodsPlugin" >

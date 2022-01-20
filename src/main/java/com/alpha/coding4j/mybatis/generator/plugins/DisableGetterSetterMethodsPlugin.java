@@ -32,7 +32,7 @@ public class DisableGetterSetterMethodsPlugin extends PluginAdapter {
         disableSetter = Optional.ofNullable(properties.getProperty(DISABLE_SETTER))
                 .filter(StringUtility::stringHasValue)
                 .filter(StringUtility::isTrue).isPresent();
-        return disableGetter || disableGetter;
+        return disableGetter || disableSetter;
     }
 
     @Override
