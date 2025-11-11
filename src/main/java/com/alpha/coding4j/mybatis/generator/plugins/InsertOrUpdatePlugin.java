@@ -58,8 +58,8 @@ public class InsertOrUpdatePlugin extends PluginAdapter {
         imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Options"));
         interfaze.addImportedTypes(imports);
 
-        Parameter param = new Parameter(recordType, "record");
-        param.addAnnotation("@Param(\"record\")");
+        Parameter param = new Parameter(recordType, "row");
+        param.addAnnotation("@Param(\"row\")");
 
         Method method = new Method("insertOrUpdate");
         method.setAbstract(true);
@@ -73,7 +73,7 @@ public class InsertOrUpdatePlugin extends PluginAdapter {
         sb.append("            \"INSERT INTO `");
         sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime()).append("`\",\n");
         sb.append("            \"  <trim prefix='(' suffix=')' suffixOverrides=','>\",\n");
-        String tpl1 = "            \"    <if test='record.%s != null'>`%s`,</if>\",\n";
+        String tpl1 = "            \"    <if test='row.%s != null'>`%s`,</if>\",\n";
         for (IntrospectedColumn column : introspectedTable.getAllColumns()) {
             final String name = column.getJavaProperty();
             sb.append(String.format(tpl1, name, column.getActualColumnName()));
@@ -81,7 +81,7 @@ public class InsertOrUpdatePlugin extends PluginAdapter {
         sb.append("            \"  </trim>\",\n");
         sb.append("            \"VALUES\",\n");
         sb.append("            \"  <trim prefix='(' suffix=')' suffixOverrides=','>\",\n");
-        String tpl2 = "            \"    <if test='record.%s != null'>#{record.%s,jdbcType=%s},</if>\",\n";
+        String tpl2 = "            \"    <if test='row.%s != null'>#{row.%s,jdbcType=%s},</if>\",\n";
         for (IntrospectedColumn column : introspectedTable.getAllColumns()) {
             final String name = column.getJavaProperty();
             sb.append(String.format(tpl2, name, name, column.getJdbcTypeName()));
@@ -89,7 +89,7 @@ public class InsertOrUpdatePlugin extends PluginAdapter {
         sb.append("            \"  </trim>\",\n");
         sb.append("            \"ON DUPLICATE KEY UPDATE \",\n");
         sb.append("            \"  <trim suffixOverrides=','>\",\n");
-        String tpl3 = "            \"    <if test='record.%s != null'>`%s` = #{record.%s,jdbcType=%s},</if>\",\n";
+        String tpl3 = "            \"    <if test='row.%s != null'>`%s` = #{row.%s,jdbcType=%s},</if>\",\n";
         for (IntrospectedColumn column : introspectedTable.getAllColumns()) {
             final String name = column.getJavaProperty();
             sb.append(String.format(tpl3, name, column.getActualColumnName(), name, column.getJdbcTypeName()));
@@ -98,15 +98,15 @@ public class InsertOrUpdatePlugin extends PluginAdapter {
         sb.append("            \"</script>\"");
         sb.append("}");
 
-        method.addAnnotation("@Insert(" + sb.toString() + ")");
+        method.addAnnotation("@Insert(" + sb + ")");
 
-        final GeneratedKey generatedKey = introspectedTable.getGeneratedKey();
+        final GeneratedKey generatedKey = introspectedTable.getGeneratedKey().orElse(null);
         if (generatedKey != null) {
             introspectedTable.getColumn(generatedKey.getColumn()).ifPresent(introspectedColumn -> {
                 if (generatedKey.isJdbcStandard()) {
                     // only jdbc standard keys are supported for multiple insert
                     StringBuilder ksb = new StringBuilder();
-                    ksb.append("@Options(useGeneratedKeys=true,keyProperty=\"record.");
+                    ksb.append("@Options(useGeneratedKeys=true, keyProperty=\"row.");
                     ksb.append(introspectedColumn.getJavaProperty());
                     ksb.append("\")");
                     method.addAnnotation(ksb.toString());
