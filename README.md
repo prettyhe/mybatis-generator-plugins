@@ -5,16 +5,16 @@ Set of plugins for the mybatis-generator to further tweak the generated code.
 ## ModelAddAnnotationPlugin
 ```xml
 <plugin type="com.alpha.coding4j.mybatis.generator.plugins.ModelAddAnnotationPlugin">
-	<property name="annotationClass" value="lombok.ToString" />
-	<property name="annotationValue" value="@ToString(callSuper = true)" />
+    <property name="annotationClass" value="lombok.ToString" />
+    <property name="annotationValue" value="@ToString(callSuper = true)" />
 </plugin>
 ```
 
 ## ClientAddAnnotationPlugin
 ```xml
 <plugin type="com.alpha.coding4j.mybatis.generator.plugins.ClientAddAnnotationPlugin">
-	<property name="annotationClass" value="com.example.annotation.FooAnna" />
-	<property name="annotationValue" value="@FooAnna" />
+    <property name="annotationClass" value="com.example.annotation.FooAnna" />
+    <property name="annotationValue" value="@FooAnna" />
 </plugin>
 ```
 
@@ -31,13 +31,8 @@ Set of plugins for the mybatis-generator to further tweak the generated code.
 ## InsertOrUpdatePlugin
 ```xml
 <plugin type="com.alpha.coding4j.mybatis.generator.plugins.InsertOrUpdatePlugin" >
-    <property name="enableTables" value="table_a_name,table_b_name" />
+    <property name="enableTables" value="table_name" />
 </plugin>
-```
-
-## InsertSelectiveWithPrimaryKeyPlugin
-```xml
-<plugin type="com.alpha.coding4j.mybatis.generator.plugins.InsertSelectiveWithPrimaryKeyPlugin" />
 ```
 
 ## DisableGetterSetterMethodsPlugin
@@ -61,11 +56,4 @@ Set of plugins for the mybatis-generator to further tweak the generated code.
 ## CountByStatementPlugin
 ```xml
 <plugin type="com.alpha.coding4j.mybatis.generator.plugins.CountByStatementPlugin" />
-```
-
-## domainObjectNameSuffix
-```xml
-<!-- 实体类重命名规则:尾部统一添加Entity -->
-<property name="domainObjectNameSuffix" value="Entity" />
-<property name="domainObjectNameSuffixExcludeTables" value="table_name" />
 ```

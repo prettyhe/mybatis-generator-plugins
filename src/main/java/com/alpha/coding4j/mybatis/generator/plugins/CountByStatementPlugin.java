@@ -53,14 +53,16 @@ public class CountByStatementPlugin extends PluginAdapter {
         imports.add(FullyQualifiedJavaType.getNewMapInstance());
         interfaze.addImportedTypes(imports);
 
-        Parameter param = new Parameter(FullyQualifiedJavaType.getStringInstance(), "countStatement");
-        param.addAnnotation("@Param(\"countStatement\")");
+        Parameter countStatement = new Parameter(FullyQualifiedJavaType.getStringInstance(), "countStatement");
+        countStatement.addAnnotation("@Param(\"countStatement\")");
+        final Parameter params = new Parameter(FullyQualifiedJavaType.getNewMapInstance(), "params");
+        params.addAnnotation("@Param(\"params\")");
 
         Method method = new Method("countByStatement");
         method.setAbstract(true);
+        method.addParameter(countStatement);
+        method.addParameter(params);
         method.setReturnType(new FullyQualifiedJavaType("long"));
-        method.addParameter(param);
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getNewMapInstance(), "params"));
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.addAnnotation("@Select({\"${countStatement}\"})");
 

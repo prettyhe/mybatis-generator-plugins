@@ -56,14 +56,16 @@ public class SelectByStatementPlugin extends PluginAdapter {
 
         returnType.addTypeArgument(FullyQualifiedJavaType.getNewMapInstance());
 
-        Parameter param = new Parameter(FullyQualifiedJavaType.getStringInstance(), "selectStatement");
-        param.addAnnotation("@Param(\"selectStatement\")");
+        Parameter selectStatement = new Parameter(FullyQualifiedJavaType.getStringInstance(), "selectStatement");
+        selectStatement.addAnnotation("@Param(\"selectStatement\")");
+        final Parameter params = new Parameter(FullyQualifiedJavaType.getNewMapInstance(), "params");
+        params.addAnnotation("@Param(\"params\")");
 
         Method method = new Method("selectByStatement");
         method.setAbstract(true);
         method.setReturnType(returnType);
-        method.addParameter(param);
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getNewMapInstance(), "params"));
+        method.addParameter(selectStatement);
+        method.addParameter(params);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.addAnnotation("@Select({\"${selectStatement}\"})");
 

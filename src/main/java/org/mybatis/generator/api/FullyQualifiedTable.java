@@ -220,11 +220,11 @@ public class FullyQualifiedTable {
             return true;
         }
 
-        if (!(obj instanceof org.mybatis.generator.api.FullyQualifiedTable)) {
+        if (!(obj instanceof FullyQualifiedTable)) {
             return false;
         }
 
-        org.mybatis.generator.api.FullyQualifiedTable other = (org.mybatis.generator.api.FullyQualifiedTable) obj;
+        FullyQualifiedTable other = (FullyQualifiedTable) obj;
 
         return EqualsUtil.areEqual(this.introspectedTableName, other.introspectedTableName)
                 && EqualsUtil.areEqual(this.introspectedCatalog, other.introspectedCatalog)
