@@ -26,7 +26,7 @@ public class SelectByStatementPlugin extends PluginAdapter {
             " *",
             " * @param selectStatement select sql statement, like: select * from table_a where column_a = #{params.a}",
             " * @param params          params for sql, like: (a=xxx)",
-            " * @return select results as List of Map",
+            " * @return select results as List of HashMap",
             " */"
     );
 
@@ -51,21 +51,21 @@ public class SelectByStatementPlugin extends PluginAdapter {
         imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
         FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
         imports.add(returnType);
-        imports.add(FullyQualifiedJavaType.getNewMapInstance());
+        imports.add(FullyQualifiedJavaType.getNewHashMapInstance());
         interfaze.addImportedTypes(imports);
 
-        returnType.addTypeArgument(FullyQualifiedJavaType.getNewMapInstance());
+        returnType.addTypeArgument(FullyQualifiedJavaType.getNewHashMapInstance());
 
         Parameter selectStatement = new Parameter(FullyQualifiedJavaType.getStringInstance(), "selectStatement");
         selectStatement.addAnnotation("@Param(\"selectStatement\")");
-        final Parameter params = new Parameter(FullyQualifiedJavaType.getNewMapInstance(), "params");
+        final Parameter params = new Parameter(FullyQualifiedJavaType.getNewHashMapInstance(), "params");
         params.addAnnotation("@Param(\"params\")");
 
         Method method = new Method("selectByStatement");
         method.setAbstract(true);
-        method.setReturnType(returnType);
         method.addParameter(selectStatement);
         method.addParameter(params);
+        method.setReturnType(returnType);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.addAnnotation("@Select({\"${selectStatement}\"})");
 

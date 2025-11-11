@@ -37,9 +37,9 @@ public class CountByStatementPlugin extends PluginAdapter {
     }
 
     @Override
-    public boolean clientBasicCountMethodGenerated(Method method, Interface interfaze,
-                                                   IntrospectedTable introspectedTable) {
-        final boolean result = super.clientBasicCountMethodGenerated(method, interfaze, introspectedTable);
+    public boolean clientBasicSelectManyMethodGenerated(Method method, Interface interfaze,
+                                                        IntrospectedTable introspectedTable) {
+        final boolean result = super.clientBasicSelectManyMethodGenerated(method, interfaze, introspectedTable);
         addMethodToInterface(interfaze, introspectedTable);
         return result;
     }
@@ -50,12 +50,12 @@ public class CountByStatementPlugin extends PluginAdapter {
 
         imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Select"));
         imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-        imports.add(FullyQualifiedJavaType.getNewMapInstance());
+        imports.add(FullyQualifiedJavaType.getNewHashMapInstance());
         interfaze.addImportedTypes(imports);
 
         Parameter countStatement = new Parameter(FullyQualifiedJavaType.getStringInstance(), "countStatement");
         countStatement.addAnnotation("@Param(\"countStatement\")");
-        final Parameter params = new Parameter(FullyQualifiedJavaType.getNewMapInstance(), "params");
+        final Parameter params = new Parameter(FullyQualifiedJavaType.getNewHashMapInstance(), "params");
         params.addAnnotation("@Param(\"params\")");
 
         Method method = new Method("countByStatement");

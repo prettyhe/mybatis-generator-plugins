@@ -59,10 +59,10 @@ public class InsertSelectiveWithPrimaryKeyPlugin extends PluginAdapter {
         method.setDefault(true);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        method.addParameter(new Parameter(recordType, "record"));
+        method.addParameter(new Parameter(recordType, "row"));
         String tableFieldName =
                 JavaBeansUtil.getValidPropertyName(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
-        method.addBodyLine("return MyBatis3Utils.insert(this::insert, record, " + tableFieldName + ", c ->");
+        method.addBodyLine("return MyBatis3Utils.insert(this::insert, row, " + tableFieldName + ", c ->");
         List<IntrospectedColumn> columns =
                 ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getAllColumns());
         boolean first = true;
@@ -85,13 +85,13 @@ public class InsertSelectiveWithPrimaryKeyPlugin extends PluginAdapter {
                 if (first) {
                     method.addBodyLine("    c.map(" + fieldName
                             + ").toPropertyWhenPresent(\"" + column.getJavaProperty()
-                            + "\", record::" + methodName
+                            + "\", row::" + methodName
                             + ")");
                     first = false;
                 } else {
                     method.addBodyLine("    .map(" + fieldName
                             + ").toPropertyWhenPresent(\"" + column.getJavaProperty()
-                            + "\", record::" + methodName
+                            + "\", row::" + methodName
                             + ")");
                 }
             }

@@ -50,9 +50,9 @@ public class SelectMapListPlugin extends PluginAdapter {
         // 方法出参需要用到的class
         FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
         imports.add(returnType);
-        imports.add(FullyQualifiedJavaType.getNewMapInstance());
+        imports.add(FullyQualifiedJavaType.getNewHashMapInstance());
         // 完善出参
-        returnType.addTypeArgument(FullyQualifiedJavaType.getNewMapInstance());
+        returnType.addTypeArgument(FullyQualifiedJavaType.getNewHashMapInstance());
 
         // 方法体需要用到的class
         interfaze.addImportedTypes(imports);
@@ -82,9 +82,9 @@ public class SelectMapListPlugin extends PluginAdapter {
         // 方法出参需要用到的class
         FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
         imports.add(returnType);
-        imports.add(FullyQualifiedJavaType.getNewMapInstance());
+        imports.add(FullyQualifiedJavaType.getNewHashMapInstance());
         // 完善出参
-        returnType.addTypeArgument(FullyQualifiedJavaType.getNewMapInstance());
+        returnType.addTypeArgument(FullyQualifiedJavaType.getNewHashMapInstance());
 
         // 方法体需要用到的class
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.render.RenderingStrategies"));
